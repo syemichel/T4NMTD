@@ -1,0 +1,47 @@
+if(ds==@q1 ^ (~p1 & ~p2 & ~p3)) then @q1
+else if(ds==@q1 ^ (p3 & ~p1 & ~p2)) then @q3
+else if(ds==@q1 ^ (p2 & ~p1 & ~p3)) then @q4
+else if(ds==@q1 ^ ((p1 & p2) | (p1 & p3) | (p2 & p3))) then @q2
+else if(ds==@q1 ^ (p1 & ~p2 & ~p3)) then @q5
+else if(ds==@q3 ^ (~p1 & ~p2 & ~p3)) then @q1
+else if(ds==@q3 ^ (p3 & ~p1 & ~p2 & ~p5)) then @q3
+else if(ds==@q3 ^ (p3 & p5 & ~p1 & ~p2)) then @q6
+else if(ds==@q3 ^ (p2 & ~p1 & ~p3)) then @q4
+else if(ds==@q3 ^ ((p1 & p2) | (p1 & p3) | (p2 & p3))) then @q2
+else if(ds==@q3 ^ (p1 & ~p2 & ~p3)) then @q5
+else if(ds==@q4 ^ (~p1 & ~p2 & ~p3)) then @q1
+else if(ds==@q4 ^ (p3 & ~p1 & ~p2)) then @q3
+else if(ds==@q4 ^ (p2 & ~p1 & ~p3 & ~p4)) then @q4
+else if(ds==@q4 ^ ((p1 & p2) | (p1 & p3) | (p2 & p3))) then @q2
+else if(ds==@q4 ^ (p2 & p4 & ~p1 & ~p3)) then @q7
+else if(ds==@q4 ^ (p1 & ~p2 & ~p3)) then @q5
+else if(ds==@q2 ^ (true)) then @q2
+else if(ds==@q5 ^ (~p1 & ~p2 & ~p3)) then @q1
+else if(ds==@q5 ^ (p3 & ~p1 & ~p2)) then @q3
+else if(ds==@q5 ^ (p2 & ~p1 & ~p3)) then @q4
+else if(ds==@q5 ^ ((p1 & p2) | (p1 & p3) | (p2 & p3))) then @q2
+else if(ds==@q5 ^ (p1 & ~p2 & ~p3 & ~p4)) then @q5
+else if(ds==@q5 ^ (p1 & p4 & ~p2 & ~p3)) then @q7
+else if(ds==@q6 ^ (~p1 & ~p2)) then @q6
+else if(ds==@q6 ^ (p2 & ~p1 & ~p3)) then @q8
+else if(ds==@q6 ^ ((p1 & p2) | (p1 & p3) | (p2 & p3))) then @q2
+else if(ds==@q6 ^ (p1 & ~p2 & ~p3)) then @q9
+else if(ds==@q7 ^ (~p3 & (~p1 | ~p2))) then @q7
+else if(ds==@q7 ^ (p3 & ~p1 & ~p2)) then @q10
+else if(ds==@q7 ^ ((p1 & p2) | (p1 & p3) | (p2 & p3))) then @q2
+else if(ds==@q8 ^ (~p1 & ~p2)) then @q6
+else if(ds==@q8 ^ (p2 & ~p1 & ~p3 & ~p4)) then @q8
+else if(ds==@q8 ^ ((p1 & p2) | (p1 & p3) | (p2 & p3))) then @q2
+else if(ds==@q8 ^ (p2 & p4 & ~p1 & ~p3)) then @q11
+else if(ds==@q8 ^ (p1 & ~p2 & ~p3)) then @q9
+else if(ds==@q9 ^ (~p1 & ~p2)) then @q6
+else if(ds==@q9 ^ (p2 & ~p1 & ~p3)) then @q8
+else if(ds==@q9 ^ ((p1 & p2) | (p1 & p3) | (p2 & p3))) then @q2
+else if(ds==@q9 ^ (p1 & ~p2 & ~p3 & ~p4)) then @q9
+else if(ds==@q9 ^ (p1 & p4 & ~p2 & ~p3)) then @q11
+else if(ds==@q10 ^ (~p3 & (~p1 | ~p2))) then @q7
+else if(ds==@q10 ^ (p3 & ~p1 & ~p2 & ~p5)) then @q10
+else if(ds==@q10 ^ (p3 & p5 & ~p1 & ~p2)) then @q11
+else if(ds==@q10 ^ ((p1 & p2) | (p1 & p3) | (p2 & p3))) then @q2
+else if(ds==@q11 ^ ((~p1 & ~p2) | (~p1 & ~p3) | (~p2 & ~p3))) then @q11
+else if(ds==@q11 ^ ((p1 & p2) | (p1 & p3) | (p2 & p3))) then @q2
