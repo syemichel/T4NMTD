@@ -1,0 +1,13 @@
+{
+  "prefix_mappings": {
+    "waterworld1": "../dfa_text/waterworld/waterworld1.txt",
+    "waterworld2": "../dfa_text/waterworld/waterworld2.txt",
+    "waterworld3": "../dfa_text/waterworld/waterworld3.txt",
+    "halfcheetah1": "../dfa_text/halfcheetah/halfcheetah1.txt",
+    "halfcheetah2": "../dfa_text/halfcheetah/halfcheetah2.txt",
+    "racecar1": "../dfa_text/racecar/racecar1.txt",
+    "racecar2": "../dfa_text/racecar/racecar2.txt",
+    "frozenlake1": "../dfa_text/frozenlake/frozenlake1.txt",
+    "frozenlake2": "../dfa_text/frozenlake/frozenlake2.txt"
+  }
+}
