@@ -1,0 +1,409 @@
+////////////////////////////////////////////////////////////////////
+// A simple continuous MDP for the racecar problem.
+//
+// A car is accelerated by applying a force in the x and y directions.
+// The goal is to bring the car to within a fixed distance to a fixed
+// goal location. The car must remain within boundaries defined as
+// line segments connected between points (X1, Y1) and (X2, Y2).
+//
+////////////////////////////////////////////////////////////////////
+domain racecar {
+
+    requirements = {
+        reward-deterministic
+    };
+
+	types {
+		b: object;		// boundary of the race track that cannot be crossed by the car
+		state: {@1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12, @13, @14, @15, @16, @17, @18, @19, @20, @21, @22, @23,
+		 @24, @25, @26, @27, @28, @29, @30, @31, @32, @33, @34, @35, @36, @37, @38, @39, @40, @41, @42, @43, @44, @45, @46, @47,
+		 @48, @49, @50, @51, @52, @53, @54, @55, @56, @57, @58, @59, @60, @61, @62, @63, @64, @65, @66, @67};
+	};
+
+    pvariables {
+
+		// non-fluents
+		X1(b) 	: { non-fluent, real, default = 0 };	 	// boundary is the line segment (X1, Y1)X2, Y2)
+		Y1(b) 	: { non-fluent, real, default = 0 };
+		X2(b) 	: { non-fluent, real, default = 1 };
+		Y2(b) 	: { non-fluent, real, default = 1 };
+
+		X0		: { non-fluent, real, default = 0.495 };		// starting x position of car
+		Y0 		: { non-fluent, real, default = -0.495 };		// starting y position of car
+
+GX1: { non-fluent, real, default = 0.7};
+GY1: { non-fluent, real, default = 0.0};
+GX2: { non-fluent, real, default = 0.495};
+GY2: { non-fluent, real, default = 0.495};
+GX3: { non-fluent, real, default = 0.0};
+GY3: { non-fluent, real, default = 0.7};
+GX4: { non-fluent, real, default = -0.495};
+GY4: { non-fluent, real, default = 0.495};
+GX5: { non-fluent, real, default = -0.7};
+GY5: { non-fluent, real, default = 0.0};
+GX6: { non-fluent, real, default = -0.495};
+GY6: { non-fluent, real, default = -0.495};
+GX7: { non-fluent, real, default = 0.0};
+GY7: { non-fluent, real, default = -0.7};
+GX8: { non-fluent, real, default = 0.495};
+GY8: { non-fluent, real, default = -0.495};
+
+		RADIUS 		: { non-fluent, real, default = 0.1 };		// radius of goal region
+		COST 		: { non-fluent, real, default = 0.01 };		// cost of fuel, proportional to force
+		GOAL-REWARD : { non-fluent, real, default = 1.0 };		// reward upon reaching the goal region
+
+		MAX-F 	: { non-fluent, real, default = 1 };		// maximum force in each direction
+		MASS 	: { non-fluent, real, default = 2.0 };		// mass of the car
+		DT	 	: { non-fluent, real, default = 0.1 };		// how much time passes between epochs
+
+		// interm and derived fluents
+		ax 				: { interm-fluent, real };			// x acceleration of car
+		ay 				: { interm-fluent, real };			// y acceleration of car
+		dx				: { interm-fluent, real };			// x displacement of car
+		dy				: { interm-fluent, real };			// y displacement of car
+
+		o1(b)			: { interm-fluent, int }; 			// orientations of line segments
+		o2(b)			: { interm-fluent, int };
+		o3(b)			: { interm-fluent, int };
+		o4(b)			: { interm-fluent, int };
+		intersect(b)	: { interm-fluent, bool }; 			// whether car intersects boundary
+		violation		: { interm-fluent, bool};			// whether car intersects any boundary
+
+		// states
+       	x    	: { state-fluent, real, default = 0.495 };      // x position of car
+		y 		: { state-fluent, real, default = -0.495 };		// y position of car
+		vx		: { state-fluent, real, default = 0 };		// x velocity of car
+		vy		: { state-fluent, real, default = 0 };		// y velocity of car
+
+       	// actions
+       	fx 		: { action-fluent, real, default = 0 };     // x force component applied to the car
+		fy 		: { action-fluent, real, default = 0 };     // y force component applied to the car
+
+		//automata setting
+		g1 : {interm-fluent, bool};
+		g2 : {interm-fluent, bool};
+		g3 : {interm-fluent, bool};
+		g4 : {interm-fluent, bool};
+		g5 : {interm-fluent, bool};
+		g6 : {interm-fluent, bool};
+		g7 : {interm-fluent, bool};
+		g8 : {interm-fluent, bool};
+		q1 : {state-fluent, bool, default = true};
+		q2 : {state-fluent, bool, default = false};
+		q3 : {state-fluent, bool, default = false};
+		q4 : {state-fluent, bool, default = false};
+		q5 : {state-fluent, bool, default = false};
+		q6 : {state-fluent, bool, default = false};
+		q7 : {state-fluent, bool, default = false};
+		q8 : {state-fluent, bool, default = false};
+		q9 : {state-fluent, bool, default = false};
+		q10 : {state-fluent, bool, default = false};
+		q11 : {state-fluent, bool, default = false};
+		q12 : {state-fluent, bool, default = false};
+		q13 : {state-fluent, bool, default = false};
+		q14 : {state-fluent, bool, default = false};
+		q15 : {state-fluent, bool, default = false};
+		q16 : {state-fluent, bool, default = false};
+	    q17 : {state-fluent, bool, default = false};
+		q18 : {state-fluent, bool, default = false};
+		q19 : {state-fluent, bool, default = false};
+		q20 : {state-fluent, bool, default = false};
+		q21 : {state-fluent, bool, default = false};
+		q22 : {state-fluent, bool, default = false};
+		q23 : {state-fluent, bool, default = false};
+		q24 : {state-fluent, bool, default = false};
+		q25 : {state-fluent, bool, default = false};
+		q26 : {state-fluent, bool, default = false};
+		q27 : {state-fluent, bool, default = false};
+		q28 : {state-fluent, bool, default = false};
+		q29 : {state-fluent, bool, default = false};
+		q30 : {state-fluent, bool, default = false};
+		q31 : {state-fluent, bool, default = false};
+		q32 : {state-fluent, bool, default = false};
+		q33 : {state-fluent, bool, default = false};
+		q34 : {state-fluent, bool, default = false};
+		q35 : {state-fluent, bool, default = false};
+		q36 : {state-fluent, bool, default = false};
+		q37 : {state-fluent, bool, default = false};
+		q38 : {state-fluent, bool, default = false};
+		q39 : {state-fluent, bool, default = false};
+		q40 : {state-fluent, bool, default = false};
+		q41 : {state-fluent, bool, default = false};
+		q42 : {state-fluent, bool, default = false};
+		q43 : {state-fluent, bool, default = false};
+		q44 : {state-fluent, bool, default = false};
+		q45 : {state-fluent, bool, default = false};
+		q46 : {state-fluent, bool, default = false};
+		q47 : {state-fluent, bool, default = false};
+		q48 : {state-fluent, bool, default = false};
+		q49 : {state-fluent, bool, default = false};
+		q50 : {state-fluent, bool, default = false};
+		q51 : {state-fluent, bool, default = false};
+		q52 : {state-fluent, bool, default = false};
+		q53 : {state-fluent, bool, default = false};
+		q54 : {state-fluent, bool, default = false};
+		q55 : {state-fluent, bool, default = false};
+		q56 : {state-fluent, bool, default = false};
+		q57 : {state-fluent, bool, default = false};
+		q58 : {state-fluent, bool, default = false};
+		q59 : {state-fluent, bool, default = false};
+		q60 : {state-fluent, bool, default = false};
+		q61 : {state-fluent, bool, default = false};
+		q62 : {state-fluent, bool, default = false};
+		q63 : {state-fluent, bool, default = false};
+		q64 : {state-fluent, bool, default = false};
+		q65 : {state-fluent, bool, default = false};
+		q66 : {state-fluent, bool, default = false};
+		as: { state-fluent, state, default = @1};
+        bs: { state-fluent, state, default = @1};
+        pbs: { state-fluent, state, default = @1};
+
+        p-g1: {state-fluent, bool, default = false };
+        p-g2: {state-fluent, bool, default = false };
+        p-g3: {state-fluent, bool, default = false };
+        p-g4: {state-fluent, bool, default = false };
+        p-g5: {state-fluent, bool, default = false };
+        p-g6: {state-fluent, bool, default = false };
+        p-g7: {state-fluent, bool, default = false };
+        p-g8: {state-fluent, bool, default = false };
+
+
+    };
+
+    cpfs {
+
+		// compute acceleration and displacement of the car
+		ax = fx / MASS;
+		ay = fy / MASS;
+		dx = vx * DT + ax * pow[DT, 2] / 2;
+		dy = vy * DT + ay * pow[DT, 2] / 2;
+
+		// detect intersect with boundaries
+		// ref: https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
+		o1(?b) = sgn[(dy * (X1(?b) - (x + dx))) - (dx * (Y1(?b) - (y + dy)))];
+		o2(?b) = sgn[(dy * (X2(?b) - (x + dx))) - (dx * (Y2(?b) - (y + dy)))];
+		o3(?b) = sgn[((Y2(?b) - Y1(?b)) * (x - X2(?b))) - ((X2(?b) - X1(?b)) * (y - Y2(?b)))];
+		o4(?b) = sgn[((Y2(?b) - Y1(?b)) * ((x + dx) - X2(?b))) - ((X2(?b) - X1(?b)) * ((y + dy) - Y2(?b)))];
+
+		intersect(?b) = ((o1(?b) ~= o2(?b)) ^ (o3(?b) ~= o4(?b))) |
+						((o1(?b) == 0) ^ ((X1(?b) <= max[x, (x + dx)]) ^ (X1(?b) >= min[x, (x + dx)]) ^
+										  (Y1(?b) <= max[y, (y + dy)]) ^ (Y1(?b) >= min[y, (y + dy)]))) |
+						((o2(?b) == 0) ^ ((X2(?b) <= max[x, (x + dx)]) ^ (X2(?b) >= min[x, (x + dx)]) ^
+										  (Y2(?b) <= max[y, (y + dy)]) ^ (Y2(?b) >= min[y, (y + dy)]))) |
+						((o3(?b) == 0) ^ ((x <= max[X1(?b), X2(?b)]) ^ (x >= min[X1(?b), X2(?b)]) ^
+										  (y <= max[Y1(?b), Y2(?b)]) ^ (y >= min[Y1(?b), Y2(?b)]))) |
+						((o4(?b) == 0) ^ (((x + dx) <= max[X1(?b), X2(?b)]) ^ ((x + dx) >= min[X1(?b), X2(?b)]) ^
+										  ((y + dy) <= max[Y1(?b), Y2(?b)]) ^ ((y + dy) >= min[Y1(?b), Y2(?b)])));
+
+		violation = exists_{?b : b} [intersect(?b)];
+
+		// compute new position and velocity
+		x' = if(violation)
+				then X0
+				else x + dx;
+		y' = if(violation)
+				then Y0
+				else y + dy;
+		vx' = if(violation)
+				then 0.0
+				else vx + ax * DT;
+		vy' = if(violation)
+				then 0.0
+				else vy + ay * DT;
+
+	//automata setting
+	g1 = if(sqrt[pow[x - GX1, 2] + pow[y - GY1, 2]] <= RADIUS) then true else false;
+	g2 = if(sqrt[pow[x - GX2, 2] + pow[y - GY2, 2]] <= RADIUS) then true else false;
+	g3 = if(sqrt[pow[x - GX3, 2] + pow[y - GY3, 2]] <= RADIUS) then true else false;
+	g4 = if(sqrt[pow[x - GX4, 2] + pow[y - GY4, 2]] <= RADIUS) then true else false;
+	g5 = if(sqrt[pow[x - GX5, 2] + pow[y - GY5, 2]] <= RADIUS) then true else false;
+	g6 = if(sqrt[pow[x - GX6, 2] + pow[y - GY6, 2]] <= RADIUS) then true else false;
+	g7 = if(sqrt[pow[x - GX7, 2] + pow[y - GY7, 2]] <= RADIUS) then true else false;
+	g8 = if(sqrt[pow[x - GX8, 2] + pow[y - GY8, 2]] <= RADIUS) then true else false;
+
+q1' = (q1 ^ (~g1 ^ ~g8));
+q2' = (q1 ^ (g8 ^ ~g1)) | (q2 ^ (~g1 ^ ~g7));
+q3' = (q1 ^ (g1 ^ ~g8)) | (q3 ^ (~g2 ^ ~g8));
+q4' = (q1 ^ (g1 ^ g8)) | (q2 ^ (g1 ^ ~g7)) | (q3 ^ (g8 ^ ~g2)) | (q4 ^ (~g2 ^ ~g7));
+q5' = (q2 ^ (g7 ^ ~g1)) | (q5 ^ (~g1 ^ ~g6));
+q6' = (q2 ^ (g1 ^ g7)) | (q4 ^ (g7 ^ ~g2)) | (q5 ^ (g1 ^ ~g6)) | (q6 ^ (~g2 ^ ~g6));
+q7' = (q3 ^ (g2 ^ ~g8)) | (q7 ^ (~g3 ^ ~g8));
+q8' = (q3 ^ (g2 ^ g8)) | (q4 ^ (g2 ^ ~g7)) | (q7 ^ (g8 ^ ~g3)) | (q8 ^ (~g3 ^ ~g7));
+q9' = (q4 ^ (g2 ^ g7)) | (q6 ^ (g2 ^ ~g6)) | (q8 ^ (g7 ^ ~g3)) | (q9 ^ (~g3 ^ ~g6));
+q10' = (q5 ^ (g6 ^ ~g1)) | (q10 ^ (~g1 ^ ~g5));
+q11' = (q5 ^ (g1 ^ g6)) | (q6 ^ (g6 ^ ~g2)) | (q10 ^ (g1 ^ ~g5)) | (q11 ^ (~g2 ^ ~g5));
+q12' = (q6 ^ (g2 ^ g6)) | (q9 ^ (g6 ^ ~g3)) | (q11 ^ (g2 ^ ~g5)) | (q12 ^ (~g3 ^ ~g5));
+q13' = (q7 ^ (g3 ^ ~g8)) | (q13 ^ (~g4 ^ ~g8));
+q14' = (q7 ^ (g3 ^ g8)) | (q8 ^ (g3 ^ ~g7)) | (q13 ^ (g8 ^ ~g4)) | (q14 ^ (~g4 ^ ~g7));
+q15' = (q8 ^ (g3 ^ g7)) | (q9 ^ (g3 ^ ~g6)) | (q14 ^ (g7 ^ ~g4)) | (q15 ^ (~g4 ^ ~g6));
+q16' = (q9 ^ (g3 ^ g6)) | (q12 ^ (g3 ^ ~g5)) | (q15 ^ (g6 ^ ~g4)) | (q16 ^ (~g4 ^ ~g5));
+q17' = (q10 ^ (g5 ^ ~g1)) | (q17 ^ (~g1 ^ ~g4));
+q18' = (q10 ^ (g1 ^ g5)) | (q11 ^ (g5 ^ ~g2)) | (q17 ^ (g1 ^ ~g4)) | (q18 ^ (~g2 ^ ~g4));
+q19' = (q11 ^ (g2 ^ g5)) | (q12 ^ (g5 ^ ~g3)) | (q18 ^ (g2 ^ ~g4)) | (q19 ^ (~g3 ^ ~g4));
+q20' = (q12 ^ (g3 ^ g5)) | (q16 ^ (g5 ^ ~g4)) | (q19 ^ (g3 ^ ~g4)) | (q20 ^ (~g4));
+q21' = (q13 ^ (g4 ^ ~g8)) | (q21 ^ (~g5 ^ ~g8));
+q22' = (q13 ^ (g4 ^ g8)) | (q14 ^ (g4 ^ ~g7)) | (q21 ^ (g8 ^ ~g5)) | (q22 ^ (~g5 ^ ~g7));
+q23' = (q14 ^ (g4 ^ g7)) | (q15 ^ (g4 ^ ~g6)) | (q22 ^ (g7 ^ ~g5)) | (q23 ^ (~g5 ^ ~g6));
+q24' = (q15 ^ (g4 ^ g6)) | (q16 ^ (g4 ^ ~g5)) | (q23 ^ (g6 ^ ~g5)) | (q24 ^ (~g5));
+q25' = (q16 ^ (g4 ^ g5)) | (q25 ^ (~g4 ^ ~g5));
+q26' = (q17 ^ (g4 ^ ~g1)) | (q26 ^ (~g1 ^ ~g3));
+q27' = (q17 ^ (g1 ^ g4)) | (q18 ^ (g4 ^ ~g2)) | (q26 ^ (g1 ^ ~g3)) | (q27 ^ (~g2 ^ ~g3));
+q28' = (q18 ^ (g2 ^ g4)) | (q19 ^ (g4 ^ ~g3)) | (q27 ^ (g2 ^ ~g3)) | (q28 ^ (~g3));
+q29' = (q19 ^ (g3 ^ g4)) | (q29 ^ (~g3 ^ ~g4));
+q30' = (q20 ^ (g4)) | (q25 ^ (g4 ^ ~g5)) | (q29 ^ (g4 ^ ~g3)) | (q30 ^ (~g3 ^ ~g5));
+q31' = (q21 ^ (g5 ^ ~g8)) | (q31 ^ (~g6 ^ ~g8));
+q32' = (q21 ^ (g5 ^ g8)) | (q22 ^ (g5 ^ ~g7)) | (q31 ^ (g8 ^ ~g6)) | (q32 ^ (~g6 ^ ~g7));
+q33' = (q22 ^ (g5 ^ g7)) | (q23 ^ (g5 ^ ~g6)) | (q32 ^ (g7 ^ ~g6)) | (q33 ^ (~g6));
+q34' = (q23 ^ (g5 ^ g6)) | (q34 ^ (~g5 ^ ~g6));
+q35' = (q24 ^ (g5)) | (q25 ^ (g5 ^ ~g4)) | (q34 ^ (g5 ^ ~g6)) | (q35 ^ (~g4 ^ ~g6));
+q36' = (q25 ^ (g4 ^ g5)) | (q30 ^ (g5 ^ ~g3)) | (q35 ^ (g4 ^ ~g6)) | (q36 ^ (~g3 ^ ~g6));
+q37' = (q26 ^ (g3 ^ ~g1)) | (q37 ^ (~g1 ^ ~g2));
+q38' = (q26 ^ (g1 ^ g3)) | (q27 ^ (g3 ^ ~g2)) | (q37 ^ (g1 ^ ~g2)) | (q38 ^ (~g2));
+q39' = (q27 ^ (g2 ^ g3)) | (q39 ^ (~g2 ^ ~g3));
+q40' = (q28 ^ (g3)) | (q29 ^ (g3 ^ ~g4)) | (q39 ^ (g3 ^ ~g2)) | (q40 ^ (~g2 ^ ~g4));
+q41' = (q29 ^ (g3 ^ g4)) | (q30 ^ (g3 ^ ~g5)) | (q40 ^ (g4 ^ ~g2)) | (q41 ^ (~g2 ^ ~g5));
+q42' = (q30 ^ (g3 ^ g5)) | (q36 ^ (g3 ^ ~g6)) | (q41 ^ (g5 ^ ~g2)) | (q42 ^ (~g2 ^ ~g6));
+q43' = (q31 ^ (g6 ^ ~g8)) | (q43 ^ (~g7 ^ ~g8));
+q44' = (q31 ^ (g6 ^ g8)) | (q32 ^ (g6 ^ ~g7)) | (q43 ^ (g8 ^ ~g7)) | (q44 ^ (~g7));
+q45' = (q32 ^ (g6 ^ g7)) | (q45 ^ (~g6 ^ ~g7));
+q46' = (q33 ^ (g6)) | (q34 ^ (g6 ^ ~g5)) | (q45 ^ (g6 ^ ~g7)) | (q46 ^ (~g5 ^ ~g7));
+q47' = (q34 ^ (g5 ^ g6)) | (q35 ^ (g6 ^ ~g4)) | (q46 ^ (g5 ^ ~g7)) | (q47 ^ (~g4 ^ ~g7));
+q48' = (q35 ^ (g4 ^ g6)) | (q36 ^ (g6 ^ ~g3)) | (q47 ^ (g4 ^ ~g7)) | (q48 ^ (~g3 ^ ~g7));
+q49' = (q36 ^ (g3 ^ g6)) | (q42 ^ (g6 ^ ~g2)) | (q48 ^ (g3 ^ ~g7)) | (q49 ^ (~g2 ^ ~g7));
+q50' = (q37 ^ (g2 ^ ~g1)) | (q50 ^ (~g1));
+q51' = (q37 ^ (g1 ^ g2)) | (q51 ^ (~g1 ^ ~g2));
+q52' = (q38 ^ (g2)) | (q39 ^ (g2 ^ ~g3)) | (q51 ^ (g2 ^ ~g1)) | (q52 ^ (~g1 ^ ~g3));
+q53' = (q39 ^ (g2 ^ g3)) | (q40 ^ (g2 ^ ~g4)) | (q52 ^ (g3 ^ ~g1)) | (q53 ^ (~g1 ^ ~g4));
+q54' = (q40 ^ (g2 ^ g4)) | (q41 ^ (g2 ^ ~g5)) | (q53 ^ (g4 ^ ~g1)) | (q54 ^ (~g1 ^ ~g5));
+q55' = (q41 ^ (g2 ^ g5)) | (q42 ^ (g2 ^ ~g6)) | (q54 ^ (g5 ^ ~g1)) | (q55 ^ (~g1 ^ ~g6));
+q56' = (q42 ^ (g2 ^ g6)) | (q49 ^ (g2 ^ ~g7)) | (q55 ^ (g6 ^ ~g1)) | (q56 ^ (~g1 ^ ~g7));
+q57' = (q43 ^ (g7 ^ ~g8)) | (q57 ^ (~g8));
+q58' = (q43 ^ (g7 ^ g8)) | (q58 ^ (~g7 ^ ~g8));
+q59' = (q44 ^ (g7)) | (q45 ^ (g7 ^ ~g6)) | (q58 ^ (g7 ^ ~g8)) | (q59 ^ (~g6 ^ ~g8));
+q60' = (q45 ^ (g6 ^ g7)) | (q46 ^ (g7 ^ ~g5)) | (q59 ^ (g6 ^ ~g8)) | (q60 ^ (~g5 ^ ~g8));
+q61' = (q46 ^ (g5 ^ g7)) | (q47 ^ (g7 ^ ~g4)) | (q60 ^ (g5 ^ ~g8)) | (q61 ^ (~g4 ^ ~g8));
+q62' = (q47 ^ (g4 ^ g7)) | (q48 ^ (g7 ^ ~g3)) | (q61 ^ (g4 ^ ~g8)) | (q62 ^ (~g3 ^ ~g8));
+q63' = (q48 ^ (g3 ^ g7)) | (q49 ^ (g7 ^ ~g2)) | (q62 ^ (g3 ^ ~g8)) | (q63 ^ (~g2 ^ ~g8));
+q64' = (q49 ^ (g2 ^ g7)) | (q56 ^ (g7 ^ ~g1)) | (q63 ^ (g2 ^ ~g8)) | (q64 ^ (~g1 ^ ~g8));
+q65' = (q50 ^ (g1)) | (q51 ^ (g1)) | (q52 ^ (g1)) | (q53 ^ (g1)) | (q54 ^ (g1)) | (q55 ^ (g1)) | (q56 ^ (g1)) | (q57 ^ (g8)) | (q58 ^ (g8)) | (q59 ^ (g8)) | (q60 ^ (g8)) | (q61 ^ (g8)) | (q62 ^ (g8)) | (q63 ^ (g8)) | (q64 ^ (g1 | g8)) | (q65 ^ (true));
+q66' = violation;
+
+p-g1' = g1;
+p-g2' = g2;
+p-g3' = g3;
+p-g4' = g4;
+p-g5' = g5;
+p-g6' = g6;
+p-g7' = g7;
+p-g8' = g8;
+
+as' =
+if(q66) then @66
+else if(q1) then @1
+else if(q2) then @2
+else if(q3) then @3
+else if(q4) then @4
+else if(q5) then @5
+else if(q6) then @6
+else if(q7) then @7
+else if(q8) then @8
+else if(q9) then @9
+else if(q10) then @10
+else if(q11) then @11
+else if(q12) then @12
+else if(q13) then @13
+else if(q14) then @14
+else if(q15) then @15
+else if(q16) then @16
+else if(q17) then @17
+else if(q18) then @18
+else if(q19) then @19
+else if(q20) then @20
+else if(q21) then @21
+else if(q22) then @22
+else if(q23) then @23
+else if(q24) then @24
+else if(q25) then @25
+else if(q26) then @26
+else if(q27) then @27
+else if(q28) then @28
+else if(q29) then @29
+else if(q30) then @30
+else if(q31) then @31
+else if(q32) then @32
+else if(q33) then @33
+else if(q34) then @34
+else if(q35) then @35
+else if(q36) then @36
+else if(q37) then @37
+else if(q38) then @38
+else if(q39) then @39
+else if(q40) then @40
+else if(q41) then @41
+else if(q42) then @42
+else if(q43) then @43
+else if(q44) then @44
+else if(q45) then @45
+else if(q46) then @46
+else if(q47) then @47
+else if(q48) then @48
+else if(q49) then @49
+else if(q50) then @50
+else if(q51) then @51
+else if(q52) then @52
+else if(q53) then @53
+else if(q54) then @54
+else if(q55) then @55
+else if(q56) then @56
+else if(q57) then @57
+else if(q58) then @58
+else if(q59) then @59
+else if(q60) then @60
+else if(q61) then @61
+else if(q62) then @62
+else if(q63) then @63
+else if(q64) then @64
+else if(q65) then @65
+else @67;
+
+bs' =
+if(q66) then @11
+else if(q1) then @1
+else if(q5 | q7 | q4 | q2 | q3) then @2
+else if(q10 | q13 | q6 | q8) then @3
+else if(q17 | q21 | q11 | q14 | q9) then @4
+else if(q19 | q23 | q16 | q26 | q31 | q18 | q22 | q12 | q15) then @5
+else if(q28 | q33 | q29 | q34 | q25 | q20 | q24 | q27 | q32) then @6
+else if(q51 | q58 | q40 | q46 | q38 | q44 | q30 | q35 | q37 | q43 | q39 | q45) then @7
+else if(q53 | q60 | q42 | q48 | q52 | q59 | q41 | q47 | q36) then @8
+else if(q55 | q62 | q49 | q54 | q61) then @9
+else if(q50 | q57 | q64 | q56 | q63) then @10
+else if(q65) then @12
+else @13;
+
+pbs' = bs;
+
+    };
+
+    reward =
+    if(bs ~= @11) then
+    0*[bs==@1] + 9*[bs==@2] + 18*[bs==@3] + 27*[bs==@4] + 36*[bs==@5] + 45*[bs==@6] + 54*[bs==@7] + 63*[bs==@8] + 72*[bs==@9] + 81*[bs==@10] + 100*[bs==@12]
+    - 0*[pbs==@1] - 9*[pbs==@2] - 18*[pbs==@3] - 27*[pbs==@4] - 36*[pbs==@5] - 45*[pbs==@6] - 54*[pbs==@7] - 63*[pbs==@8] - 72*[pbs==@9] - 81*[pbs==@10] - 100*[pbs==@12]
+    else -9;
+	termination {
+	    bs == @11;
+	    bs == @12;
+	};
+
+    state-invariants {
+		RADIUS >= 0 ^ MAX-F >= 0 ^ MASS >= 0 ^ DT >= 0;
+    };
+
+    action-preconditions {
+		fx >= -MAX-F;
+		fx <= MAX-F;
+		fy >= -MAX-F;
+		fy <= MAX-F;
+    };
+
+}

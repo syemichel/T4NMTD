@@ -1,0 +1,15 @@
+if(ds==@q1 ^ (~p1 & ~v)) then @q1
+else if(ds==@q1 ^ (v)) then @q2
+else if(ds==@q1 ^ (p1 & ~v)) then @q3
+else if(ds==@q2 ^ (true)) then @q2
+else if(ds==@q3 ^ (~p2 & ~v)) then @q3
+else if(ds==@q3 ^ (v)) then @q2
+else if(ds==@q3 ^ (p2 & ~v)) then @q4
+else if(ds==@q4 ^ (~p3 & ~v)) then @q4
+else if(ds==@q4 ^ (v)) then @q2
+else if(ds==@q4 ^ (p3 & ~v)) then @q5
+else if(ds==@q5 ^ (~p4 & ~v)) then @q5
+else if(ds==@q5 ^ (v)) then @q2
+else if(ds==@q5 ^ (p4 & ~v)) then @q6
+else if(ds==@q6 ^ (~v)) then @q6
+else if(ds==@q6 ^ (v)) then @q2
