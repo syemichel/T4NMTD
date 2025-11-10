@@ -1,0 +1,110 @@
+{
+  "waterworld1-1": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld1.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst11.rddl"
+  },
+  "waterworld1-2": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld1.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst12.rddl"
+  },
+  "waterworld1-3": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld1.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst13.rddl"
+  },
+  "waterworld1-4": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld1.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst14.rddl"
+  },
+  "waterworld1-5": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld1.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst15.rddl"
+  },
+  "waterworld1-6": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld1.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst16.rddl"
+  },
+  "waterworld1-7": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld1.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst17.rddl"
+  },
+  "waterworld1-8": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld1.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst18.rddl"
+  },
+  "waterworld1-9": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld1.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst19.rddl"
+  },
+  "waterworld1-10": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld1.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst20.rddl"
+  },
+  "waterworld2-1": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld2.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst21.rddl"
+  },
+  "waterworld2-2": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld2.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst22.rddl"
+  },
+  "waterworld2-3": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld2.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst23.rddl"
+  },
+  "waterworld2-4": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld2.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst24.rddl"
+  },
+  "waterworld2-5": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld2.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst25.rddl"
+  },
+  "waterworld2-6": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld2.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst26.rddl"
+  },
+  "waterworld2-7": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld2.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst27.rddl"
+  },
+  "waterworld2-8": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld2.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst28.rddl"
+  },
+  "waterworld2-9": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld2.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst29.rddl"
+  },
+  "waterworld2-10": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld2.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst30.rddl"
+  },
+  "waterworld3-1": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld3.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst31.rddl"
+  },
+  "waterworld3-2": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld3.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst32.rddl"
+  },
+  "waterworld3-3": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld3.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst33.rddl"
+  },
+  "waterworld3-4": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld3.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst34.rddl"
+  },
+  "waterworld3-5": {
+    "domain": "../env/low_level_benchmarks/waterworld/waterworld3.rddl",
+    "instance": "../env/low_level_benchmarks/waterworld/inst35.rddl"
+  },
+  "racecar1": {
+    "domain": "../env/low_level_benchmarks/racecar/racecar1.rddl",
+    "instance": "../env/low_level_benchmarks/racecar/inst1.rddl"
+  },
+  "racecar2": {
+    "domain": "../env/low_level_benchmarks/racecar/racecar2.rddl",
+    "instance": "../env/low_level_benchmarks/racecar/inst1.rddl"
+  }
+}

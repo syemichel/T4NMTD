@@ -1,0 +1,64 @@
+ if(pds==@q1 ^ (~p1 & ~p2 & ~p3 & ~p4)) then @q1
+else if(pds==@q1 ^ (p4 & ~p1 & ~p2 & ~p3)) then @q2
+else if(pds==@q1 ^ (~p1 & ~p4 & (p2 | p3))) then @q13
+else if(pds==@q1 ^ (p4 & ~p1 & (p2 | p3))) then @q3
+else if(pds==@q1 ^ (p1 & ~p4)) then @q4
+else if(pds==@q1 ^ (p1 & p4)) then @q5
+else if(pds==@q2 ^ (~p1 & ~p2 & ~p3 & ~p5)) then @q2
+else if(pds==@q2 ^ (p5 & ~p1 & ~p2 & ~p3)) then @q6
+else if(pds==@q2 ^ (~p1 & ~p4 & ~p5 & (p2 | p3))) then @q13
+else if(pds==@q2 ^ (p5 & ~p1 & ~p4 & (p2 | p3))) then @q7
+else if(pds==@q2 ^ (p4 & ~p1 & ~p5 & (p2 | p3))) then @q3
+else if(pds==@q2 ^ (p4 & p5 & ~p1 & (p2 | p3))) then @q8
+else if(pds==@q2 ^ (p1 & ~p4 & ~p5)) then @q4
+else if(pds==@q2 ^ (p1 & p5 & ~p4)) then @q9
+else if(pds==@q2 ^ (p1 & p4 & ~p5)) then @q5
+else if(pds==@q2 ^ (p1 & p4 & p5)) then @q10
+else if(pds==@q13 ^ (true)) then @q13
+else if(pds==@q3 ^ (~p1 & ~p2 & ~p3 & ~p5)) then @q3
+else if(pds==@q3 ^ (p5 & ~p1 & ~p2 & ~p3)) then @q8
+else if(pds==@q3 ^ (~p5 & (p1 | p2 | p3))) then @q13
+else if(pds==@q3 ^ (p5 & (p1 | p2 | p3))) then @q7
+else if(pds==@q4 ^ (~p1 & ~p2 & ~p3)) then @q4
+else if(pds==@q4 ^ (~p2 & (p1 | p3))) then @q13
+else if(pds==@q4 ^ (p2)) then @q11
+else if(pds==@q5 ^ (~p1 & ~p2 & ~p3 & ~p5)) then @q5
+else if(pds==@q5 ^ (p5 & ~p1 & ~p2 & ~p3)) then @q10
+else if(pds==@q5 ^ (~p2 & ~p5 & (p1 | p3))) then @q13
+else if(pds==@q5 ^ (p5 & ~p2 & (p1 | p3))) then @q7
+else if(pds==@q5 ^ (p2 & ~p5)) then @q11
+else if(pds==@q5 ^ (p2 & p5)) then @q12
+else if(pds==@q6 ^ (~p1 & ~p2 & ~p3 & ~p6)) then @q6
+else if(pds==@q6 ^ (p6)) then @q14
+else if(pds==@q6 ^ (~p1 & ~p4 & ~p5 & ~p6 & (p2 | p3))) then @q13
+else if(pds==@q6 ^ (p5 & ~p1 & ~p4 & ~p6 & (p2 | p3))) then @q7
+else if(pds==@q6 ^ (p4 & ~p1 & ~p5 & ~p6 & (p2 | p3))) then @q3
+else if(pds==@q6 ^ (p4 & p5 & ~p1 & ~p6 & (p2 | p3))) then @q8
+else if(pds==@q6 ^ (p1 & ~p4 & ~p5 & ~p6)) then @q4
+else if(pds==@q6 ^ (p1 & p5 & ~p4 & ~p6)) then @q9
+else if(pds==@q6 ^ (p1 & p4 & ~p5 & ~p6)) then @q5
+else if(pds==@q6 ^ (p1 & p4 & p5 & ~p6)) then @q10
+else if(pds==@q7 ^ (~p1 & ~p2 & ~p3 & ~p6)) then @q7
+else if(pds==@q7 ^ (p6)) then @q14
+else if(pds==@q7 ^ (~p6 & (p1 | p2 | p3))) then @q13
+else if(pds==@q8 ^ (~p1 & ~p2 & ~p3 & ~p6)) then @q8
+else if(pds==@q8 ^ (p6)) then @q14
+else if(pds==@q8 ^ (~p5 & ~p6 & (p1 | p2 | p3))) then @q13
+else if(pds==@q8 ^ (p5 & ~p6 & (p1 | p2 | p3))) then @q7
+else if(pds==@q9 ^ (~p1 & ~p2 & ~p3 & ~p6)) then @q9
+else if(pds==@q9 ^ (p6)) then @q14
+else if(pds==@q9 ^ (~p2 & ~p6 & (p1 | p3))) then @q13
+else if(pds==@q9 ^ (p2 & ~p6)) then @q11
+else if(pds==@q10 ^ (~p1 & ~p2 & ~p3 & ~p6)) then @q10
+else if(pds==@q10 ^ (p6)) then @q14
+else if(pds==@q10 ^ (~p2 & ~p5 & ~p6 & (p1 | p3))) then @q13
+else if(pds==@q10 ^ (p5 & ~p2 & ~p6 & (p1 | p3))) then @q7
+else if(pds==@q10 ^ (p2 & ~p5 & ~p6)) then @q11
+else if(pds==@q10 ^ (p2 & p5 & ~p6)) then @q12
+else if(pds==@q11 ^ (~p1 & ~p2 & ~p3)) then @q11
+else if(pds==@q11 ^ (p3)) then @q14
+else if(pds==@q11 ^ (~p3 & (p1 | p2))) then @q13
+else if(pds==@q12 ^ (~p1 & ~p2 & ~p3 & ~p6)) then @q12
+else if(pds==@q12 ^ (p3 | p6)) then @q14
+else if(pds==@q12 ^ (~p3 & ~p6 & (p1 | p2))) then @q13
+else if(pds==@q14 ^ (true)) then @q14
