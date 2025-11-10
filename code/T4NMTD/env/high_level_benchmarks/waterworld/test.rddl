@@ -1,0 +1,22 @@
+ds' =
+    if(ds == @q1 ^ (~p1 ^ ~p2 ^ ~p3)) then @q1
+    else if(ds == @q1 ^ p1) then @q3
+    else if(ds == @q2 ^ (~p1 ^ ~p2 ^ ~p3)) then @q3
+    else if(ds == @q2 ^ p3) then @q4
+    else if(ds == @q3 ^ (~p1 ^ ~p2 ^ ~p3)) then @q4
+    else if(ds == @q3 ^ p2) then @q5
+    else if(ds == @q4 ^ (~p1 ^ ~p2 ^ ~p3)) then @q5
+    else if(ds == @q4 ^ p1) then @q6
+    else if(ds == @q5 ^ (~p1 ^ ~p2 ^ ~p3)) then @q6
+    else if(ds == @q5 ^ p2) then @q7
+    else if(ds == @q6 ^ (~p1 ^ ~p2 ^ ~p3)) then @q7
+    else if(ds == @q6 ^ p3) then @q8
+    else if(ds == @q8) then @q8
+    else if(ds == @q1 ^ (~p1^(p3|p2))) then @q2
+    else if(ds == @q2 ^ (~p3^(p2|p1))) then @q2
+    else if(ds == @q3 ^ (~p2^(p3|p1))) then @q2
+    else if(ds == @q4 ^ (~p1^(p3|p2))) then @q2
+    else if(ds == @q5 ^ (~p2^(p3|p1))) then @q2
+    else if(ds == @q6 ^ (~p3^(p2|p1))) then @q2
+    else if(ds == @q2) then @q2
+    else @q9;
