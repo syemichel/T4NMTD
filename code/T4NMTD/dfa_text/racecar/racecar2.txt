@@ -1,0 +1,69 @@
+if(ds==@q1 ^ (~p1 & ~p4 & ~v)) then @q1
+else if(ds==@q1 ^ (v)) then @q2
+else if(ds==@q1 ^ (p4 & ~p1 & ~v)) then @q3
+else if(ds==@q1 ^ (p1 & ~p4 & ~v)) then @q4
+else if(ds==@q1 ^ (p1 & p4 & ~v)) then @q5
+else if(ds==@q2 ^ (true)) then @q2
+else if(ds==@q3 ^ (~p1 & ~p3 & ~v)) then @q3
+else if(ds==@q3 ^ (v)) then @q2
+else if(ds==@q3 ^ (p3 & ~p1 & ~v)) then @q6
+else if(ds==@q3 ^ (p1 & ~p3 & ~v)) then @q5
+else if(ds==@q3 ^ (p1 & p3 & ~v)) then @q7
+else if(ds==@q4 ^ (~p2 & ~p4 & ~v)) then @q4
+else if(ds==@q4 ^ (v)) then @q2
+else if(ds==@q4 ^ (p4 & ~p2 & ~v)) then @q5
+else if(ds==@q4 ^ (p2 & ~p4 & ~v)) then @q8
+else if(ds==@q4 ^ (p2 & p4 & ~v)) then @q9
+else if(ds==@q5 ^ (~p2 & ~p3 & ~v)) then @q5
+else if(ds==@q5 ^ (v)) then @q2
+else if(ds==@q5 ^ (p3 & ~p2 & ~v)) then @q7
+else if(ds==@q5 ^ (p2 & ~p3 & ~v)) then @q9
+else if(ds==@q5 ^ (p2 & p3 & ~v)) then @q10
+else if(ds==@q6 ^ (~p1 & ~p2 & ~v)) then @q6
+else if(ds==@q6 ^ (v)) then @q2
+else if(ds==@q6 ^ (p2 & ~p1 & ~v)) then @q11
+else if(ds==@q6 ^ (p1 & ~p2 & ~v)) then @q7
+else if(ds==@q6 ^ (p1 & p2 & ~v)) then @q12
+else if(ds==@q7 ^ (~p2 & ~v)) then @q7
+else if(ds==@q7 ^ (v)) then @q2
+else if(ds==@q7 ^ (p2 & ~v)) then @q13
+else if(ds==@q8 ^ (~p3 & ~p4 & ~v)) then @q8
+else if(ds==@q8 ^ (v)) then @q2
+else if(ds==@q8 ^ (p4 & ~p3 & ~v)) then @q9
+else if(ds==@q8 ^ (p3 & ~p4 & ~v)) then @q14
+else if(ds==@q8 ^ (p3 & p4 & ~v)) then @q15
+else if(ds==@q9 ^ (~p3 & ~v)) then @q9
+else if(ds==@q9 ^ (v)) then @q2
+else if(ds==@q9 ^ (p3 & ~v)) then @q16
+else if(ds==@q10 ^ (~p2 & ~p3 & ~v)) then @q10
+else if(ds==@q10 ^ (v)) then @q2
+else if(ds==@q10 ^ (p3 & ~p2 & ~v)) then @q16
+else if(ds==@q10 ^ (p2 & ~p3 & ~v)) then @q13
+else if(ds==@q10 ^ (p2 & p3 & ~v)) then @q17
+else if(ds==@q11 ^ (~p1 & ~v)) then @q11
+else if(ds==@q11 ^ (v)) then @q2
+else if(ds==@q11 ^ (p1 & ~v)) then @q18
+else if(ds==@q12 ^ (~p1 & ~p2 & ~v)) then @q12
+else if(ds==@q12 ^ (v)) then @q2
+else if(ds==@q12 ^ (p2 & ~p1 & ~v)) then @q13
+else if(ds==@q12 ^ (p1 & ~v)) then @q18
+else if(ds==@q13 ^ (~p1 & ~p3 & ~v)) then @q13
+else if(ds==@q13 ^ (v)) then @q2
+else if(ds==@q13 ^ (p3 & ~p1 & ~v)) then @q17
+else if(ds==@q13 ^ (p1 & ~v)) then @q18
+else if(ds==@q14 ^ (~p4 & ~v)) then @q14
+else if(ds==@q14 ^ (v)) then @q2
+else if(ds==@q14 ^ (p4 & ~v)) then @q18
+else if(ds==@q15 ^ (~p3 & ~p4 & ~v)) then @q15
+else if(ds==@q15 ^ (v)) then @q2
+else if(ds==@q15 ^ (p4 & ~v)) then @q18
+else if(ds==@q15 ^ (p3 & ~p4 & ~v)) then @q16
+else if(ds==@q16 ^ (~p2 & ~p4 & ~v)) then @q16
+else if(ds==@q16 ^ (v)) then @q2
+else if(ds==@q16 ^ (p4 & ~v)) then @q18
+else if(ds==@q16 ^ (p2 & ~p4 & ~v)) then @q17
+else if(ds==@q17 ^ (~p1 & ~p4 & ~v)) then @q17
+else if(ds==@q17 ^ (v)) then @q2
+else if(ds==@q17 ^ (~v & (p1 | p4))) then @q18
+else if(ds==@q18 ^ (~v)) then @q18
+else if(ds==@q18 ^ (v)) then @q2
