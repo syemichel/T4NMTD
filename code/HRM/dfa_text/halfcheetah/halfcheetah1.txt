@@ -1,0 +1,8 @@
+if(ds==@q1 ^ (~p2 & ~p4)) then @q1
+else if(ds==@q1 ^ (p4)) then @q3
+else if(ds==@q1 ^ (p2 & ~p4)) then @q2
+else if(ds==@q3 ^ (~p3 & ~p5)) then @q3
+else if(ds==@q3 ^ (p5 & ~p3)) then @q2
+else if(ds==@q3 ^ (p3)) then @q4
+else if(ds==@q2 ^ (True)) then @q2
+else if(ds==@q4 ^ (True)) then @q4
