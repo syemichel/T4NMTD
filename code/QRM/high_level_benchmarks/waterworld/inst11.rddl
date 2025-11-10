@@ -1,0 +1,32 @@
+non-fluents waterworld-nf {
+    domain = waterworld;
+
+    objects {
+        ball: {b1, b2, b3, b4, b5, b6, b7, b8, b9};
+        dim: {x, y};
+    };
+
+    non-fluents {
+        MAX-FIELD-WIDTH = 20.0;
+        RED(b1);
+    	RED(b2);
+    	RED(b3);
+    	GREEN(b4);
+    	GREEN(b5);
+    	GREEN(b6);
+        BLUE(b7);
+    	BLUE(b8);
+    	BLUE(b9);
+    };
+}
+
+instance inst1 {
+    domain = waterworld;
+    non-fluents = waterworld-nf;
+
+
+
+    max-nondef-actions = 1;
+    horizon = 100;
+    discount = 1.0;
+}
